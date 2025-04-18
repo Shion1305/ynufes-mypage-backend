@@ -14,6 +14,16 @@ type FolderRef struct {
 	bucket   *storage.BucketHandle
 }
 
+func NewFolderRef(bucket *storage.BucketHandle, basePath string) FolderRef {
+	if basePath != "" && basePath[len(basePath)-1] != '/' {
+		basePath += "/"
+	}
+	return FolderRef{
+		basePath: basePath,
+		bucket:   bucket,
+	}
+}
+
 func (f FolderRef) Object(name string) ObjectRef {
 	return ObjectRef{
 		objName: f.basePath + name,
